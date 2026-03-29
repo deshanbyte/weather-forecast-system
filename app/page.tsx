@@ -21,80 +21,80 @@ export default function Home() {
     return () => clearInterval(interval);
   }, []);
 
-  const predict = (vals: number[], steps: number) => {
-    if (vals.length < 2) return vals[vals.length - 1] || 0;
-    const last = vals[vals.length - 1];
-    const prev = vals[vals.length - 2];
-    const slope = last - prev;
-    return last + (slope * steps * 0.5); 
-  };
-
   const latest = data[data.length - 1] || { temp: 0, hum: 0, rain: 0, air: 0 };
-  const tempForecast = predict(data.map((d: any) => d.temp), 12);
 
   return (
-    <div className="min-h-screen bg-slate-900 text-slate-100 p-4 md:p-8 font-sans">
-      <div className="max-w-6xl mx-auto flex justify-between items-center mb-8">
+    <div className="min-h-screen bg-[#0f172a] text-white p-6 font-sans">
+      {/* Header Section */}
+      <div className="max-w-6xl mx-auto mb-10 flex justify-between items-end">
         <div>
-          <h1 className="text-3xl font-black tracking-tight text-white uppercase">Enviro <span className="text-blue-500">Analytics</span></h1>
-          <p className="text-slate-400 text-sm flex items-center">
-            <span className="relative flex h-2 w-2 mr-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-            </span>
-            Live Station: Homagama
-          </p>
+          <h1 className="text-4xl font-black tracking-tighter italic uppercase">
+            Enviro<span className="text-blue-500">Analytics</span>
+          </h1>
+          <div className="flex items-center gap-2 mt-2">
+            <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse"></div>
+            <p className="text-slate-400 text-xs uppercase font-bold tracking-widest">Station: Homagama (Live)</p>
+          </div>
+        </div>
+        <div className="text-right hidden md:block">
+          <p className="text-slate-500 text-[10px] font-bold uppercase">System Status</p>
+          <p className="text-blue-400 font-mono text-sm">STABLE_V2.0</p>
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Metric Cards */}
         <div className="space-y-6">
-          <div className="bg-gradient-to-br from-orange-500 to-red-600 p-6 rounded-3xl shadow-xl">
-            <p className="text-white/70 text-xs font-bold uppercase">Temperature</p>
-            <h2 className="text-4xl font-black text-white mt-2">{Number(latest.temp).toFixed(1)}°C</h2>
+          <div className="bg-gradient-to-br from-orange-500 to-red-600 p-8 rounded-[2rem] shadow-2xl transition-transform hover:scale-[1.02]">
+            <p className="opacity-80 text-xs font-bold uppercase tracking-widest">Temperature</p>
+            <h2 className="text-5xl font-black mt-2">{Number(latest.temp).toFixed(1)}°C</h2>
           </div>
-          <div className="bg-gradient-to-br from-blue-500 to-cyan-600 p-6 rounded-3xl shadow-xl">
-            <p className="text-white/70 text-xs font-bold uppercase">Humidity</p>
-            <h2 className="text-4xl font-black text-white mt-2">{Number(latest.hum).toFixed(0)}%</h2>
+          <div className="bg-gradient-to-br from-blue-500 to-indigo-600 p-8 rounded-[2rem] shadow-2xl transition-transform hover:scale-[1.02]">
+            <p className="opacity-80 text-xs font-bold uppercase tracking-widest">Humidity</p>
+            <h2 className="text-5xl font-black mt-2">{Number(latest.hum).toFixed(0)}%</h2>
           </div>
-          <div className="bg-gradient-to-br from-purple-500 to-indigo-600 p-6 rounded-3xl shadow-xl">
-            <p className="text-white/70 text-xs font-bold uppercase">Air Quality</p>
-            <h2 className="text-4xl font-black text-white mt-2">{latest.air}</h2>
+          <div className="bg-gradient-to-br from-emerald-500 to-teal-600 p-8 rounded-[2rem] shadow-2xl transition-transform hover:scale-[1.02]">
+            <p className="opacity-80 text-xs font-bold uppercase tracking-widest">Air Quality</p>
+            <h2 className="text-5xl font-black mt-2">{latest.air} <span className="text-sm opacity-50 font-normal">AQI</span></h2>
           </div>
         </div>
 
-        <div className="lg:col-span-2 bg-slate-800/50 border border-slate-700 p-6 rounded-3xl backdrop-blur-md">
-          <h3 className="text-lg font-bold mb-6 text-slate-300">Predictive Trend Analysis</h3>
-          <div className="h-[300px] w-full">
+        {/* Graph Section */}
+        <div className="lg:col-span-2 bg-slate-800/30 border border-slate-700/50 backdrop-blur-xl p-8 rounded-[2.5rem]">
+          <h3 className="text-xl font-bold mb-8 text-slate-200">24-Hour Environmental Trend</h3>
+          <div className="h-[350px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={data.slice(-20)}>
                 <defs>
-                  <linearGradient id="colorTemp" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3}/>
+                  <linearGradient id="colorMain" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.8}/>
                     <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} />
                 <XAxis dataKey="time" hide />
-                <YAxis stroke="#64748b" fontSize={12} tickLine={false} axisLine={false} />
-                <Tooltip contentStyle={{ backgroundColor: '#1e293b', border: 'none', borderRadius: '12px', color: '#fff' }} />
-                <Area type="monotone" dataKey="temp" stroke="#3b82f6" fillOpacity={1} fill="url(#colorTemp)" strokeWidth={3} />
+                <YAxis stroke="#475569" fontSize={12} tickLine={false} axisLine={false} />
+                <Tooltip 
+                  contentStyle={{ backgroundColor: '#1e293b', border: 'none', borderRadius: '15px' }}
+                  itemStyle={{ color: '#fff' }}
+                />
+                <Area type="monotone" dataKey="temp" stroke="#3b82f6" fillOpacity={1} fill="url(#colorMain)" strokeWidth={4} />
               </AreaChart>
             </ResponsiveContainer>
           </div>
           
-          <div className="grid grid-cols-3 gap-4 mt-8 pt-6 border-t border-slate-700 text-center">
-            <div>
-              <p className="text-slate-500 text-[10px] uppercase font-bold">ARIMA Forecast</p>
-              <p className="text-slate-200 font-bold">{tempForecast.toFixed(1)}°C</p>
+          <div className="flex justify-between mt-10 p-6 bg-slate-900/50 rounded-2xl border border-slate-700/50">
+            <div className="text-center">
+              <p className="text-slate-500 text-[10px] font-bold uppercase mb-1">Rain Risk</p>
+              <p className="text-slate-200 font-mono text-sm uppercase">{latest.rain > 30 ? 'High' : 'Low'}</p>
             </div>
-            <div>
-              <p className="text-slate-500 text-[10px] uppercase font-bold">Rain Prob.</p>
-              <p className="text-slate-200 font-bold">{latest.rain > 30 ? 'High' : 'Low'}</p>
+            <div className="text-center border-x border-slate-700 px-10">
+              <p className="text-slate-500 text-[10px] font-bold uppercase mb-1">Server</p>
+              <p className="text-green-400 font-mono text-sm uppercase">Vercel Edge</p>
             </div>
-            <div>
-              <p className="text-slate-500 text-[10px] uppercase font-bold">Sync</p>
-              <p className="text-green-400 font-bold">Active</p>
+            <div className="text-center">
+              <p className="text-slate-500 text-[10px] font-bold uppercase mb-1">Database</p>
+              <p className="text-blue-400 font-mono text-sm uppercase">Active</p>
             </div>
           </div>
         </div>
