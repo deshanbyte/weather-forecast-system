@@ -25,7 +25,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-[#0f172a] text-white p-6 font-sans">
-      {/* Header */}
       <div className="max-w-6xl mx-auto mb-10 flex justify-between items-end">
         <div>
           <h1 className="text-4xl font-black tracking-tighter italic uppercase">
@@ -36,32 +35,22 @@ export default function Home() {
             <p className="text-slate-400 text-xs uppercase font-bold tracking-widest">Station: Homagama (Live)</p>
           </div>
         </div>
-        <div className="text-right hidden md:block">
-          <p className="text-slate-500 text-[10px] font-bold uppercase">System Status</p>
-          <p className="text-blue-400 font-mono text-sm">STABLE_V2.0</p>
-        </div>
       </div>
 
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Metric Cards */}
         <div className="space-y-6">
-          <div className="bg-gradient-to-br from-orange-500 to-red-600 p-8 rounded-[2rem] shadow-2xl transition-transform hover:scale-[1.02]">
+          <div className="bg-gradient-to-br from-orange-500 to-red-600 p-8 rounded-[2rem] shadow-2xl">
             <p className="opacity-80 text-xs font-bold uppercase tracking-widest">Temperature</p>
             <h2 className="text-5xl font-black mt-2">{Number(latest.temp).toFixed(1)}°C</h2>
           </div>
-          <div className="bg-gradient-to-br from-blue-500 to-indigo-600 p-8 rounded-[2rem] shadow-2xl transition-transform hover:scale-[1.02]">
+          <div className="bg-gradient-to-br from-blue-500 to-indigo-600 p-8 rounded-[2rem] shadow-2xl">
             <p className="opacity-80 text-xs font-bold uppercase tracking-widest">Humidity</p>
             <h2 className="text-5xl font-black mt-2">{Number(latest.hum).toFixed(0)}%</h2>
           </div>
-          <div className="bg-gradient-to-br from-emerald-500 to-teal-600 p-8 rounded-[2rem] shadow-2xl transition-transform hover:scale-[1.02]">
-            <p className="opacity-80 text-xs font-bold uppercase tracking-widest">Air Quality</p>
-            <h2 className="text-5xl font-black mt-2">{latest.air} <span className="text-sm opacity-50 font-normal">AQI</span></h2>
-          </div>
         </div>
 
-        {/* Graph Section */}
         <div className="lg:col-span-2 bg-slate-800/30 border border-slate-700/50 backdrop-blur-xl p-8 rounded-[2.5rem]">
-          <h3 className="text-xl font-bold mb-8 text-slate-200">24-Hour Environmental Trend</h3>
+          <h3 className="text-xl font-bold mb-8 text-slate-200">Live Trend</h3>
           <div className="h-[350px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={data.slice(-20)}>
@@ -74,28 +63,10 @@ export default function Home() {
                 <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} />
                 <XAxis dataKey="time" hide />
                 <YAxis stroke="#475569" fontSize={12} tickLine={false} axisLine={false} />
-                <Tooltip 
-                  contentStyle={{ backgroundColor: '#1e293b', border: 'none', borderRadius: '15px' }}
-                  itemStyle={{ color: '#fff' }}
-                />
+                <Tooltip contentStyle={{ backgroundColor: '#1e293b', border: 'none', borderRadius: '15px' }} />
                 <Area type="monotone" dataKey="temp" stroke="#3b82f6" fillOpacity={1} fill="url(#colorMain)" strokeWidth={4} />
               </AreaChart>
             </ResponsiveContainer>
-          </div>
-          
-          <div className="flex justify-between mt-10 p-6 bg-slate-900/50 rounded-2xl border border-slate-700/50">
-            <div className="text-center">
-              <p className="text-slate-500 text-[10px] font-bold uppercase mb-1">Rain Risk</p>
-              <p className="text-slate-200 font-mono text-sm uppercase">{latest.rain > 30 ? 'High' : 'Low'}</p>
-            </div>
-            <div className="text-center border-x border-slate-700 px-10">
-              <p className="text-slate-500 text-[10px] font-bold uppercase mb-1">Server</p>
-              <p className="text-green-400 font-mono text-sm uppercase">Vercel Edge</p>
-            </div>
-            <div className="text-center">
-              <p className="text-slate-500 text-[10px] font-bold uppercase mb-1">Database</p>
-              <p className="text-blue-400 font-mono text-sm uppercase">Active</p>
-            </div>
           </div>
         </div>
       </div>
