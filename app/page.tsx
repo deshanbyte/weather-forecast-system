@@ -25,15 +25,13 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-[#0f172a] text-white p-6 font-sans">
-      <div className="max-w-6xl mx-auto mb-10 flex justify-between items-end">
-        <div>
-          <h1 className="text-4xl font-black tracking-tighter italic uppercase">
-            Enviro<span className="text-blue-500">Analytics</span>
-          </h1>
-          <div className="flex items-center gap-2 mt-2">
-            <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse"></div>
-            <p className="text-slate-400 text-xs uppercase font-bold tracking-widest">Station: Homagama (Live)</p>
-          </div>
+      <div className="max-w-6xl mx-auto mb-10">
+        <h1 className="text-4xl font-black tracking-tighter italic uppercase">
+          Enviro<span className="text-blue-500">Analytics</span>
+        </h1>
+        <div className="flex items-center gap-2 mt-2">
+          <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse"></div>
+          <p className="text-slate-400 text-xs uppercase font-bold tracking-widest text-white">Station: Homagama (Live)</p>
         </div>
       </div>
 
@@ -50,7 +48,7 @@ export default function Home() {
         </div>
 
         <div className="lg:col-span-2 bg-slate-800/30 border border-slate-700/50 backdrop-blur-xl p-8 rounded-[2.5rem]">
-          <h3 className="text-xl font-bold mb-8 text-slate-200">Live Environmental Trend</h3>
+          <h3 className="text-xl font-bold mb-8 text-slate-200 uppercase tracking-widest">Live Environmental Trend</h3>
           <div className="h-[350px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={data.slice(-20)}>
@@ -64,8 +62,8 @@ export default function Home() {
                 <XAxis dataKey="time" hide />
                 <YAxis stroke="#475569" fontSize={12} tickLine={false} axisLine={false} />
                 <Tooltip 
-                   contentStyle={{ backgroundColor: '#1e293b', border: 'none', borderRadius: '15px' }}
-                   itemStyle={{ color: '#fff' }}
+                  contentStyle={{ backgroundColor: '#1e293b', border: 'none', borderRadius: '15px' }}
+                  itemStyle={{ color: '#fff' }}
                 />
                 <Area type="monotone" dataKey="temp" stroke="#3b82f6" fillOpacity={1} fill="url(#colorMain)" strokeWidth={4} />
               </AreaChart>
