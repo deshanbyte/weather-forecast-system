@@ -25,7 +25,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-[#0f172a] text-white p-6 font-sans">
-      {/* Header Section */}
+      {/* Header */}
       <div className="max-w-6xl mx-auto mb-10 flex justify-between items-end">
         <div>
           <h1 className="text-4xl font-black tracking-tighter italic uppercase">
